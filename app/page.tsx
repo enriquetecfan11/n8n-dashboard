@@ -1,9 +1,9 @@
-import N8nDashboard from "@/components/dashboard";
+import LandingPage from "@/components/landing/landing";
 
 export default function Home() {
   return (
     <>
-      <N8nDashboard />
+      <LandingPage />
     </>
   );
 }

@@ -33,7 +33,6 @@ import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigge
 import { Switch } from "@/components/ui/switch"
 import { useTheme } from "next-themes"
 
-// Mock data
 const systemStats = {
   totalWorkflows: 24,
   activeWorkflows: 18,
@@ -187,7 +186,6 @@ export default function N8nDashboard() {
 
   return (
     <div className="min-h-screen bg-background">
-      {/* Header */}
       <div className="border-b bg-card">
         <div className="container mx-auto px-6 py-4">
           <div className="flex items-center justify-between">
@@ -205,17 +203,12 @@ export default function N8nDashboard() {
                 <RefreshCw className="h-4 w-4 mr-2" />
                 Refresh
               </Button>
-              <Button variant="outline" size="sm">
-                <Settings className="h-4 w-4 mr-2" />
-                Settings
-              </Button>
             </div>
           </div>
         </div>
       </div>
 
       <div className="container mx-auto px-6 py-6">
-        {/* System Overview Cards */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6 gap-4 mb-8">
           <Card>
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
@@ -286,7 +279,6 @@ export default function N8nDashboard() {
           </Card>
         </div>
 
-        {/* Main Content Tabs */}
         <Tabs defaultValue="workflows" className="space-y-6">
           <TabsList className="grid w-full grid-cols-4">
             <TabsTrigger value="workflows">Workflows</TabsTrigger>
@@ -295,7 +287,6 @@ export default function N8nDashboard() {
             <TabsTrigger value="settings">Settings</TabsTrigger>
           </TabsList>
 
-          {/* Workflows Tab */}
           <TabsContent value="workflows" className="space-y-6">
             <Card>
               <CardHeader>
