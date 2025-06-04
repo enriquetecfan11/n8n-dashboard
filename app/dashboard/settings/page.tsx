@@ -4,8 +4,19 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Switch } from "@/components/ui/switch";
 import { Settings } from "lucide-react";
 import { useTheme } from "next-themes";
+import { useEffect, useState } from "react";
 
 export default function SettingsPage() {
+    const [url, setUrl] = useState<string | null>('')
+    const [key, setKey] = useState<string | null>('')
+
+    useEffect(() => {
+        if (window) {
+            setUrl(localStorage.getItem('n8n-url'))
+            setKey(localStorage.getItem('n8n-key'))
+        }
+    }, [])
+
     const { theme, setTheme } = useTheme();
 
     const handleChange = (checked: boolean) => {
@@ -15,6 +26,16 @@ export default function SettingsPage() {
             setTheme('light');
         }
     };
+
+    const saveCredentials = () => {
+        if (window) {
+            if (url && key) {
+                localStorage.setItem('n8n-url', url)
+                localStorage.setItem('n8n-key', key)
+            }
+        }
+    }
+
     return (
         <>
             <Card>
@@ -74,7 +95,8 @@ export default function SettingsPage() {
                             <input
                                 className="w-full mt-1 px-3 py-2 border rounded-md"
                                 placeholder="https://your-n8n-instance.com"
-                                defaultValue="https://n8n.example.com"
+                                value={url ?? ''}
+                                onChange={(e) => setUrl(e.target.value)}
                             />
                         </div>
                         <div>
@@ -83,12 +105,14 @@ export default function SettingsPage() {
                                 type="password"
                                 className="w-full mt-1 px-3 py-2 border rounded-md"
                                 placeholder="Your API key"
+                                value={key ?? ''}
+                                onChange={(e) => setKey(e.target.value)}
                             />
                         </div>
                     </div>
                     <div className="flex gap-2">
                         <Button>Test Connection</Button>
-                        <Button variant="outline">Save Settings</Button>
+                        <Button variant="outline" onClick={() => saveCredentials()}>Save Settings</Button>
                     </div>
                 </CardContent>
             </Card>

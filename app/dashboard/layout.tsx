@@ -87,7 +87,7 @@ export default function DashboardLayout({ children }: Readonly<{
                             <div className="flex items-center justify-between">
                                 <div className="flex items-center gap-3">
                                     <Badge variant="outline">
-                                        v1.2.2
+                                        v1.3.0
                                     </Badge>
                                 </div>
                                 <div className="flex items-center gap-3">
