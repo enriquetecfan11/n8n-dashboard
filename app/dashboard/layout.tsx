@@ -4,11 +4,14 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { Activity, FolderGit2, GitBranch, LayoutDashboard, LogOut, RefreshCw, Settings, Users, Zap } from "lucide-react";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 
 export default function DashboardLayout({ children }: Readonly<{
     children: React.ReactNode;
 }>) {
+    const router = useRouter()
+
     const links = [
         {
             label: "Monitoring",
@@ -84,11 +87,11 @@ export default function DashboardLayout({ children }: Readonly<{
                             <div className="flex items-center justify-between">
                                 <div className="flex items-center gap-3">
                                     <Badge variant="outline">
-                                        v1.0.1
+                                        v1.2.2
                                     </Badge>
                                 </div>
                                 <div className="flex items-center gap-3">
-                                    <Button variant="outline" size="sm">
+                                    <Button variant="outline" size="sm" onClick={() => router.refresh()}>
                                         <RefreshCw className="h-4 w-4 mr-2" />
                                         Refresh
                                     </Button>
