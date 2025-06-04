@@ -257,7 +257,7 @@ export default function LandingPage() {
                     </div>
 
                     <div className="mt-8 pt-8 border-t text-center text-sm text-muted-foreground">
-                        © 2024 n8n Dashboard. Built with ❤️ by <a href="github.com/forjoa" className="underline">Joaquin</a>.
+                        © 2024 n8n Dashboard. Built with ❤️ by <a href="https://github.com/forjoa" className="underline">Joaquin</a>.
                     </div>
                 </div>
             </footer>
