@@ -3,7 +3,7 @@ import { Sidebar, SidebarBody, SidebarLink } from "@/components/sidebar";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
-import { Activity, FolderGit2, GitBranch, LayoutDashboard, LogOut, RefreshCw, Settings, Users, Zap } from "lucide-react";
+import { Activity, FileText, FolderGit2, GitBranch, LayoutDashboard, LogOut, Play, RefreshCw, Settings, Table, Users, Zap, Star, BookOpen, Fingerprint } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 
@@ -28,24 +28,10 @@ export default function DashboardLayout({ children }: Readonly<{
             ),
         },
         {
-            label: "Users",
-            href: "/dashboard/users",
-            icon: (
-                <Users className="text-neutral-700 dark:text-neutral-200 h-5 w-5 flex-shrink-0" />
-            ),
-        },
-        {
             label: "Executions",
             href: "/dashboard/executions",
             icon: (
                 <Activity className="text-neutral-700 dark:text-neutral-200 h-5 w-5 flex-shrink-0" />
-            ),
-        },
-        {
-            label: "Projects",
-            href: "/dashboard/projects",
-            icon: (
-                <FolderGit2 className="text-neutral-700 dark:text-neutral-200 h-5 w-5 flex-shrink-0" />
             ),
         },
         {

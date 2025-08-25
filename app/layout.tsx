@@ -1,16 +1,22 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
+import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "@/components/theme-provider";
+import { NotificationProvider } from "@/components/notification-provider";
 
-const inter = Inter({
-  variable: '--inter',
-  subsets: ['latin']
-})
+const geistSans = Geist({
+  variable: "--font-geist-sans",
+  subsets: ["latin"],
+});
+
+const geistMono = Geist_Mono({
+  variable: "--font-geist-mono",
+  subsets: ["latin"],
+});
 
 export const metadata: Metadata = {
-  title: "N8N Dashboard",
-  description: "Most beautiful N8N dashboard",
+  title: "n8n Dashboard Pro",
+  description: "A comprehensive dashboard for managing n8n workflows",
 };
 
 export default function RootLayout({
@@ -21,16 +27,18 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body
-        className={`${inter.variable} antialiased font-[family-name:var(--inter)]`}
+        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
         <ThemeProvider
-            attribute="class"
-            defaultTheme="light"
-            enableSystem
-            disableTransitionOnChange
-          >
+          attribute="class"
+          defaultTheme="system"
+          enableSystem
+          disableTransitionOnChange
+        >
+          <NotificationProvider>
             {children}
-          </ThemeProvider>
+          </NotificationProvider>
+        </ThemeProvider>
       </body>
     </html>
   );
