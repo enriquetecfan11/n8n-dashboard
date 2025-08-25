@@ -62,7 +62,7 @@ export default function N8nDashboard() {
             </CardTitle>
           </CardHeader>
           <CardContent>
-            <WorkflowList />
+            <WorkflowList onlyActive />
           </CardContent>
         </Card>
 

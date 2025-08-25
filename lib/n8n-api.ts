@@ -144,6 +144,87 @@ class N8nApiService {
     }
   }
 
+  // Activate a workflow
+  async activateWorkflow(workflowId: string): Promise<boolean> {
+    if (!this.isConnected()) {
+      return false
+    }
+
+    try {
+      const response = await fetch(`/api/n8n/workflows/${encodeURIComponent(workflowId)}`, {
+        method: 'PATCH',
+        headers: {
+          ...this.getHeaders(),
+          'content-type': 'application/json'
+        },
+        body: JSON.stringify({ active: true })
+      })
+      return response.ok
+    } catch (error) {
+      console.error('Error activating workflow:', error)
+      return false
+    }
+  }
+
+  // Deactivate a workflow
+  async deactivateWorkflow(workflowId: string): Promise<boolean> {
+    if (!this.isConnected()) {
+      return false
+    }
+
+    try {
+      const response = await fetch(`/api/n8n/workflows/${encodeURIComponent(workflowId)}`, {
+        method: 'PATCH',
+        headers: {
+          ...this.getHeaders(),
+          'content-type': 'application/json'
+        },
+        body: JSON.stringify({ active: false })
+      })
+      return response.ok
+    } catch (error) {
+      console.error('Error deactivating workflow:', error)
+      return false
+    }
+  }
+
+  // Execute a workflow once
+  async executeWorkflow(workflowId: string): Promise<boolean> {
+    if (!this.isConnected()) {
+      return false
+    }
+
+    const headers = {
+      ...this.getHeaders(),
+      'content-type': 'application/json'
+    } as Record<string, string>
+
+    // Try preferred public API endpoint first
+    try {
+      const runResp = await fetch(`/api/n8n/workflows/${encodeURIComponent(workflowId)}/run`, {
+        method: 'POST',
+        headers,
+        body: JSON.stringify({})
+      })
+      if (runResp.ok) return true
+
+      // If not found or not allowed, try legacy create execution route
+      if (runResp.status === 404 || runResp.status === 405) {
+        const execResp = await fetch(`/api/n8n/executions`, {
+          method: 'POST',
+          headers,
+          body: JSON.stringify({ workflowId })
+        })
+        return execResp.ok
+      }
+
+      return false
+    } catch (error) {
+      console.error('Error executing workflow:', error)
+      return false
+    }
+  }
+
   // Test connection
   async testConnection(): Promise<boolean> {
     if (!this.isConnected()) {

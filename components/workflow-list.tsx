@@ -25,9 +25,10 @@ import { LoadingSpinner } from '@/components/loading-spinner'
 
 interface WorkflowListProps {
   onWorkflowAction?: (workflowId: string, action: string) => void
+  onlyActive?: boolean
 }
 
-export default function WorkflowList({ onWorkflowAction }: WorkflowListProps) {
+export default function WorkflowList({ onWorkflowAction, onlyActive }: WorkflowListProps) {
   const [workflows, setWorkflows] = useState<N8nWorkflow[]>([])
   const [loading, setLoading] = useState(true)
   const { getWorkflows, activateWorkflow, deactivateWorkflow, executeWorkflow, isConnected } = useN8nApi()
@@ -46,7 +47,8 @@ export default function WorkflowList({ onWorkflowAction }: WorkflowListProps) {
     try {
       const data = await getWorkflows()
       if (data) {
-        setWorkflows(data)
+        const filtered = onlyActive ? data.filter(w => w.active) : data
+        setWorkflows(filtered)
       }
     } finally {
       setLoading(false)

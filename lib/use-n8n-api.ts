@@ -34,8 +34,11 @@ export function useN8nApi() {
     }
   }
 
-  const getWorkflows = (): Promise<N8nWorkflow[] | null> => handleApiCall(n8nApi.getWorkflows, undefined, 'Failed to fetch workflows')
+  const getWorkflows = (): Promise<N8nWorkflow[] | null> => handleApiCall(() => n8nApi.getWorkflows(), undefined, 'Failed to fetch workflows')
   const getExecutions = (workflowId?: string): Promise<N8nExecution[] | null> => handleApiCall(() => n8nApi.getExecutions(workflowId), undefined, 'Failed to fetch executions')
+  const activateWorkflow = (workflowId: string): Promise<boolean | null> => handleApiCall(() => n8nApi.activateWorkflow(workflowId), 'Workflow activated', 'Failed to activate workflow')
+  const deactivateWorkflow = (workflowId: string): Promise<boolean | null> => handleApiCall(() => n8nApi.deactivateWorkflow(workflowId), 'Workflow deactivated', 'Failed to deactivate workflow')
+  const executeWorkflow = (workflowId: string): Promise<boolean | null> => handleApiCall(() => n8nApi.executeWorkflow(workflowId), 'Execution started', 'Failed to execute workflow')
 
   const testConnection = async (credentials?: N8nCredentials): Promise<boolean> => {
     const providedUrl = credentials?.url ?? n8nApi.getCredentials().url
@@ -63,8 +66,13 @@ export function useN8nApi() {
     connected,
     getWorkflows,
     getExecutions,
+    activateWorkflow,
+    deactivateWorkflow,
+    executeWorkflow,
     testConnection,
     setCredentials: n8nApi.setCredentials,
     getCredentials: n8nApi.getCredentials,
+    // expose boolean for components expecting isConnected flag
+    isConnected: connected,
   }
 }
