@@ -61,7 +61,8 @@ class N8nApiService {
   // Get headers for API requests
   private getHeaders() {
     return {
-      'X-N8N-API-KEY': this.credentials.apiKey || ''
+      'x-n8n-api-key': this.credentials.apiKey || '',
+      'x-n8n-url': this.credentials.url || ''
     }
   }
 
@@ -74,7 +75,7 @@ class N8nApiService {
     }
 
     try {
-      const response = await fetch(`${this.credentials.url}/api/v1/workflows`, {
+      const response = await fetch(`/api/n8n/workflows`, {
         headers: this.getHeaders()
       })
 
@@ -112,8 +113,8 @@ class N8nApiService {
 
     try {
       const url = workflowId
-        ? `${this.credentials.url}/api/v1/executions?filter=${encodeURIComponent(JSON.stringify({ workflowId }))}`
-        : `${this.credentials.url}/api/v1/executions`
+        ? `/api/n8n/executions?filter=${encodeURIComponent(JSON.stringify({ workflowId }))}`
+        : `/api/n8n/executions`
 
       const response = await fetch(url, {
         headers: this.getHeaders()
@@ -150,8 +151,7 @@ class N8nApiService {
     }
 
     try {
-      console.log(this.getHeaders())
-      const response = await fetch(`${this.credentials.url}/api/v1/workflows?limit=1`, {
+      const response = await fetch(`/api/n8n/workflows?limit=1`, {
         headers: this.getHeaders()
       })
 

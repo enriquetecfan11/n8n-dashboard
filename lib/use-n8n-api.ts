@@ -37,13 +37,15 @@ export function useN8nApi() {
   const getWorkflows = (): Promise<N8nWorkflow[] | null> => handleApiCall(n8nApi.getWorkflows, undefined, 'Failed to fetch workflows')
   const getExecutions = (workflowId?: string): Promise<N8nExecution[] | null> => handleApiCall(() => n8nApi.getExecutions(workflowId), undefined, 'Failed to fetch executions')
 
-  const testConnection = async (credentials: N8nCredentials): Promise<boolean> => {
-    if (!credentials.url || !credentials.apiKey) {
+  const testConnection = async (credentials?: N8nCredentials): Promise<boolean> => {
+    const providedUrl = credentials?.url ?? n8nApi.getCredentials().url
+    const providedKey = credentials?.apiKey ?? n8nApi.getCredentials().apiKey
+    if (!providedUrl || !providedKey) {
       showError('Please enter both n8n URL and API key')
       return false
     }
 
-    n8nApi.setCredentials(credentials.url, credentials.apiKey)
+    n8nApi.setCredentials(providedUrl, providedKey)
 
     const result = await handleApiCall(
       () => n8nApi.testConnection(),
